@@ -1,0 +1,33 @@
+name: 'dremix1'
+
+services:
+  remix:
+    #    image: app-dremix1-node:latest
+    build:
+      context: ./docker/node
+      args:
+        - UID=1000
+        - GID=1000
+        - USER_NAME=dev
+    user: 1000:1000
+    volumes:
+      - ./source:/app
+    ports:
+      - 3000:3000
+    command:
+      - npm
+      - run
+      - dev
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
