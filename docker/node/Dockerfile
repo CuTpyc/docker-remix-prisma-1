@@ -4,8 +4,6 @@ ARG UID=1000
 ARG GID=1000
 ARG USER_NAME=dev
 
-RUN apt-get update && apt-get install sudo && apt-get install postgresql
-    
 RUN groupadd --gid $GID $USER_NAME || echo "exists"
 RUN useradd --uid $UID --gid $USER_NAME --shell /bin/bash --create-home $USER_NAME || echo "exists"
 
